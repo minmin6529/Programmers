@@ -9,7 +9,8 @@ class Solution {
             for (int j = 0; j < str.length; j++) {
                 babbling[i] = babbling[i].replace(str[j], " ");
             }
-            
+
+            // trim() : 문자열 앞뒤 공백 제거
             if (babbling[i].trim().length() == 0) {
                 answer++;
             }
