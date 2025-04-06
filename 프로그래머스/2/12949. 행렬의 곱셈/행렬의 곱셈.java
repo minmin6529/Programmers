@@ -1,7 +1,6 @@
 import java.util.*;
 
 class Solution {
-    
     public int[][] solution(int[][] arr1, int[][] arr2) {
         int r1 = arr1.length;
         int c1 = arr1[0].length;
@@ -17,7 +16,7 @@ class Solution {
                 }
             }
         }
-            
+        
         return answer;
     }
 }
