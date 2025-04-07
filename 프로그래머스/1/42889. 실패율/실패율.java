@@ -1,30 +1,26 @@
 import java.util.*;
 
 class Solution {
+    
     public int[] solution(int N, int[] stages) {
-        
-        int[] currentStages = new int[N + 1];
-        int[] clearStages = new int[N + 1];
-        Map<Integer, Double> map = new HashMap<>();
-        
+        int[] challenger = new int[N + 2];
         for (int i = 0; i < stages.length; i++) {
-            for (int j = 0; j < stages[i]; j++) {
-                clearStages[j] += 1;
-            }
-            currentStages[stages[i] - 1] += 1;
+            challenger[stages[i]] += 1;
         }
-
-        for (int i = 0; i < N; i++) {
-            if (currentStages[i] == 0 || clearStages[i] == 0) {
-                map.put(i + 1, 0.0);
-            } else {
-                map.put(i + 1, (double) currentStages[i] / (double) clearStages[i]);
+        
+        HashMap<Integer, Double> fails = new HashMap<>();
+        double total = stages.length;
+        
+        for (int i = 1; i <= N; i++) {
+            if (challenger[i] == 0) {
+                fails.put(i, 0.);
+            } 
+            else {
+                fails.put(i, challenger[i] / total);
+                total -= challenger[i];
             }
         }
-
-        List<Integer> list = new ArrayList<>(map.keySet());
-        list.sort((o1, o2) -> Double.compare(map.get(o2), map.get(o1)));
-
-        return list.stream().mapToInt(i -> i).toArray();
+        
+        return fails.entrySet().stream().sorted((o1, o2) -> Double.compare(o2.getValue(), o1.getValue())).mapToInt(HashMap.Entry::getKey).toArray();
     }
 }
