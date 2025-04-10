@@ -1,43 +1,35 @@
 import java.util.*;
 
 class Solution {
-    static int dr[] = {-1, 0, 1, 0};
-    static int dc[] = {0, -1, 0, 1};
+    private static boolean isValidMove(int nx, int ny) {
+        return 0 <= nx && nx < 11 & 0 <= ny && ny < 11;
+    }
+        
+    private static final HashMap<Character, int[]> location = new HashMap<>();
+        
+    private static void initLocation() {
+        location.put('U', new int[]{0, 1});
+        location.put('D', new int[]{0, -1});
+        location.put('L', new int[]{-1, 0});
+        location.put('R', new int[]{1, 0});
+    }
     
     public int solution(String dirs) {
-        int answer = 0;
-        int map[][] = new int[11][11];
-        boolean visit[][][] = new boolean[11][11][4];
-        int r = 5;
-        int c = 5;
-        
+        initLocation();
+        int x = 5, y = 5;
+        HashSet<String> answer = new HashSet<>();
         for (int i = 0; i < dirs.length(); i++) {
-            char cc = dirs.charAt(i);
-            int d = 0;  
-            
-            if (cc == 'U')
-                d = 0; 
-            if (cc == 'L')
-                d = 1;
-            if (cc == 'D')
-                d = 2;
-            if (cc == 'R')
-                d = 3;
-            int nr = r + dr[d];
-            int nc = c + dc[d];
-            
-            if (nr < 0 || nc < 0 || nr >= 11 || nc >= 11) 
+            int[] offset = location.get(dirs.charAt(i));
+            int nx = x + offset[0];
+            int ny = y + offset[1];
+            if (!isValidMove(nx, ny))
                 continue;
-            
-            if (!visit[nr][nc][d]) {
-                visit[nr][nc][d] = true;
-                d = (d%2 == 0)? 2-d: 4-d;
-                visit[r][c][d] = true;
-                answer++;
-            }
-            r = nr;
-            c = nc;
+            answer.add(x + " " + y + " " + nx + " " + ny);
+            answer.add(nx + " " + ny + " " + x + " " + y);
+            x = nx;
+            y = ny;
         }
-        return answer;
+        
+        return answer.size() / 2;
     }
 }
