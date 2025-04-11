@@ -2,26 +2,30 @@ import java.util.*;
 
 class Solution {
     public int[] solution(int[] arr, int divisor) {
-        int[] answer = {};
-        int cnt = 0;        
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] % divisor == 0) {
-                cnt++;
-            }
-        }
-        
-        if (cnt == 0) {
-            return new int[] {-1};
-        }
-        
-        answer = new int[cnt];
         int num = 0;
+        
         for (int i = 0; i < arr.length; i++) {
             if (arr[i] % divisor == 0) {
-                answer[num++] = arr[i];
+                num++;
             }
         }
+        
+        if (num == 0) {
+            int[] arr1 = new int[]{-1};
+            return arr1;
+        }
+        int[] answer = new int[num];
+        
+        int n = 0;
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] % divisor == 0) {
+                answer[n] = arr[i];
+                n++;
+            }
+        }
+        
         Arrays.sort(answer);
+        
         return answer;
     }
 }
